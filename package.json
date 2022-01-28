@@ -1,6 +1,8 @@
 {
-  "version": "0.1.0",
+  "version": "0.0.0-alpha.0",
   "license": "MIT",
+  "name": "css-codemod",
+  "author": "Spencer Miskoviak",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -30,8 +32,6 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "css-codemod",
-  "author": "Spencer Miskoviak",
   "module": "dist/css-codemod.esm.js",
   "size-limit": [
     {
@@ -50,5 +50,8 @@
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
     "typescript": "^3.9.10"
+  },
+  "dependencies": {
+    "postcss": "^8.4.5"
   }
 }
