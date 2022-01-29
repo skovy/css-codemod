@@ -1,6 +1,6 @@
 # :snake: css-codemod
 
-**css-codemod** is a toolkit for running codemods (a.k.a. transforms) over many CSS files.
+css-codemod is a toolkit for running codemods (a.k.a. transforms) over many CSS files.
 
 ## Install
 
