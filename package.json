@@ -36,6 +36,7 @@
     "trailingComma": "es5"
   },
   "devDependencies": {
+    "@types/glob": "^7.2.0",
     "@types/node": "^17.0.13",
     "dripip": "^0.10.0",
     "husky": "^7.0.4",
