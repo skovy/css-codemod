@@ -21,8 +21,6 @@
     "test": "tsdx test",
     "lint": "tsdx lint",
     "prepare": "yarn build",
-    "size": "size-limit",
-    "analyze": "size-limit --why",
     "clean": "rimraf dist",
     "css-codemod": "yarn build && ./dist/cli.js"
   },
@@ -37,23 +35,11 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "size-limit": [
-    {
-      "path": "dist/index.js",
-      "limit": "100 KB"
-    },
-    {
-      "path": "dist/cli.js",
-      "limit": "100 KB"
-    }
-  ],
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^7.0.5",
     "@types/node": "^17.0.13",
     "dripip": "^0.10.0",
     "husky": "^7.0.4",
     "rimraf": "^3.0.2",
-    "size-limit": "^7.0.5",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
     "tsup": "^5.11.11",
