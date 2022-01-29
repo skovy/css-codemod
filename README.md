@@ -9,7 +9,7 @@ There are two ways to use css-codemod.
 First, using [npx](https://www.npmjs.com/package/npx) to execute the transform without need to explicitly install `css-codemod`.
 
 ```bash
-npx css-codemod ./src/**/*.css -t ./transform.ts
+npx css-codemod "./src/**/*.css" -t ./transform.ts
 ```
 
 Second, install `css-codemod` as a dependency and execute with your package manager of choice.
@@ -17,16 +17,18 @@ Second, install `css-codemod` as a dependency and execute with your package mana
 ```bash
 # Install and execute css-codemod with npm
 npm i -D css-codemod
-./node_modules/.bin/css-codemod ./src/**/*.css -t ./transform.ts
+./node_modules/.bin/css-codemod "./src/**/*.css" -t ./transform.ts
 
 # Or, install and execute css-codemod with yarn
 yarn add -D css-codemod
-yarn css-codemod ./src/**/*.css -t ./transform.ts
+yarn css-codemod "./src/**/*.css" -t ./transform.ts
 ```
 
 ## Transform
 
-The transform file defines the transformations to define. The transform can be written in either JavaScript or TypeScript.
+The transform file defines the transformation to make to each file. The transform can be written in either JavaScript or TypeScript.
+
+It needs to provide a named `transform` export that is a function. This transform function will be invoked for each file that matches the files to process.
 
 ```ts
 // transform.ts
@@ -35,10 +37,8 @@ The transform file defines the transformations to define. The transform can be w
 // using and creating a transform function.
 import { Transform } from 'css-codemod';
 
-// Define a named `transform` export.
-// Note: it's important the function is named `transform` because that's
-// what the tool expects.
-export const transform: Transform = (file, api) => {
+// Define a named `transform` export function.
+export const transform: Transform = (fileInfo, api) => {
   // Implement the transform.
 };
 ```
@@ -71,20 +71,28 @@ css-codemod "./**/*.css"
 
 ### `Transform`
 
-Define a transform function. This type is provided to explicitly type the exported `transform` function. In general, this should be the only type that needs to be imported. The expected return value is either a CSS string or `null`. When returned a CSS string that will be written back to the original file. When returned `null`, nothing happens and the original file is skipped.
+Define a transform function.
+
+This type is provided to explicitly type the exported `transform` function. In general, this should be the only type that needs to be explicitly imported. The expected return value is either a string or `null`.
+
+- When returned a string it will be written back to the original file. - When returned `null`, nothing happens and the original file is skipped.
 
 ### `TransformFileInfo`
 
-The first argument passed to the `transform` function. It's an object with metadata about the current file being processed by the transform.
+The first argument passed to the `transform` function.
+
+It's an object with metadata about the current file being processed by the transform.
 
 - `path`: the resolved path of the file being transformed.
 - `source`: the file contents source of the file being transformed.
 
 ### `TransformAPI`
 
-The second argument passed to the `transform` function. It's an object with helpers provided by `css-codemod` to perform transformations.
+The second argument passed to the `transform` function.
 
-- `parse`: parse a raw CSS string into an AST. This returns the root node of the underlying abstract syntax tree to perform mutations. This is performed with [PostCSS](https://postcss.org/) so the returned node is a PostCSS [Root](https://postcss.org/api/#root) node. Refer to the [PostCSS API documentation](https://postcss.org/api/) for documentation and various helpers.
+It's an object with helpers provided by `css-codemod` to perform transformations.
+
+- `parse`: parse a raw CSS string into an AST. This returns the root node of the underlying abstract syntax tree. Transformations can be made by making direct mutations to the underlying node. This is performed with [PostCSS](https://postcss.org/) so the returned node is a PostCSS [Root](https://postcss.org/api/#root) node. Refer to the [PostCSS API documentation](https://postcss.org/api/) for documentation on nodes and various helpers.
 
 ### Example
 
@@ -122,6 +130,12 @@ export const transform: Transform = (fileInfo, api) => {
 
 [PostCSS](https://postcss.org) is the core tool used for performing code transformations. As a result, much of it's API is re-surfaced in this toolkit and will link to it's documentation.
 
+### AST Explorer
+
+[AST Explorer](https://astexplorer.net) is recommended when working on transforms. Change the language to "CSS" and the parser to "postcss" to see the underlying abstract syntax tree for a given snippet of CSS. This makes it much easier to understand the transformations that need to be made.
+
 ## Motivation
 
 **css-codemod** is inspired by tools like [`jscodeshift`](https://github.com/facebook/jscodeshift) to streamline CSS transformations whether it be an evolving codebase, or adopting newer syntax.
+
+Read [CSS codemods with PostCSS](https://www.skovy.dev/blog/css-codemods-with-postcss) for a conceptual overview of how this toolkit works.
