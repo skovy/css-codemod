@@ -23,8 +23,8 @@ export type Transform = (
 /**
  * Validate the general structure of the transform to catch simple errors.
  */
-const validateTransform = (transform: unknown): Transform => {
-  if (typeof transform === 'function') {
+export const validateTransform = (transform: unknown): Transform => {
+  if (typeof transform === 'function' && transform.length <= 2) {
     return transform as Transform;
   } else {
     console.error(
