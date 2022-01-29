@@ -10,7 +10,7 @@
     "src"
   ],
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   },
   "bin": {
     "css-codemod": "./dist/cli.js"
