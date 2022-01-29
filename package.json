@@ -19,6 +19,7 @@
     "start": "tsdx watch",
     "build": "tsup src/index.ts src/cli.ts --dts",
     "test": "tsdx test",
+    "test:watch": "tsdx test --watch",
     "lint": "tsdx lint",
     "prepare": "yarn build",
     "clean": "rimraf dist",
@@ -34,6 +35,10 @@
     "semi": true,
     "singleQuote": true,
     "trailingComma": "es5"
+  },
+  "resolutions": {
+    "**/tsdx/jest": "27.4.7",
+    "**/tsdx/ts-jest": "27.1.3"
   },
   "devDependencies": {
     "@types/glob": "^7.2.0",
