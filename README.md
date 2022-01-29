@@ -2,9 +2,9 @@
 
 css-codemod is a toolkit for running codemods (a.k.a. transforms) over many CSS files.
 
-## Usage
+## Install
 
-There are two ways to use css-codemod.
+There are a few ways to use css-codemod.
 
 First, using [npx](https://www.npmjs.com/package/npx) to execute the transform without need to explicitly install `css-codemod`.
 
@@ -15,35 +15,20 @@ npx css-codemod "./src/**/*.css" -t ./transform.ts
 Second, install `css-codemod` as a dependency and execute with your package manager of choice.
 
 ```bash
-# Install and execute css-codemod with npm
-npm i -D css-codemod
-./node_modules/.bin/css-codemod "./src/**/*.css" -t ./transform.ts
-
-# Or, install and execute css-codemod with yarn
 yarn add -D css-codemod
 yarn css-codemod "./src/**/*.css" -t ./transform.ts
 ```
 
-## Transform
+Third, install `css-codemod` globally.
 
-The transform file defines the transformation to make to each file. The transform can be written in either JavaScript or TypeScript.
-
-It needs to provide a named `transform` export that is a function. This transform function will be invoked for each file that matches the files to process.
-
-```ts
-// transform.ts
-
-// Import the `Transform` type to provide type-safety when
-// using and creating a transform function.
-import { Transform } from 'css-codemod';
-
-// Define a named `transform` export function.
-export const transform: Transform = (fileInfo, api) => {
-  // Implement the transform.
-};
+```
+yarn add -g css-codemod
+css-codemod "./src/**/*.css" -t ./transform.ts
 ```
 
-## CLI
+## Usage (CLI)
+
+The CLI provides the following options:
 
 ```bash
 Usage:
@@ -65,6 +50,28 @@ css-codemod ./a.css
 css-codemod ./src/a.css
 css-codemod "./src/**/*.css"
 css-codemod "./**/*.css"
+```
+
+This will pass the source of all files through the transform function specified with `-t` or `--transform` (defaults to `./transform.ts`). See the following sections for more details on the transform function and API.
+
+## Transform
+
+The transform function defines the transformation to make to each file. The transform can be written in either JavaScript or TypeScript, but TypeScript is recommended.
+
+The transform function needs to be a named `transform` export from the transform file.
+
+```ts
+// transform.ts
+
+// Import the `Transform` type to provide type-safety when
+// using and creating a transform function.
+import { Transform } from 'css-codemod';
+
+// Define a named `transform` export function.
+export const transform: Transform = (fileInfo, api) => {
+  // Implement the transform.
+  // See below for more details on the API.
+};
 ```
 
 ## API
