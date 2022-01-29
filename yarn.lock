@@ -1529,7 +1529,7 @@
   resolved "https://registry.yarnpkg.com/@types/ms/-/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
   integrity sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
 
-"@types/node@*":
+"@types/node@*", "@types/node@^17.0.13":
   version "17.0.13"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.13.tgz#5ed7ed7c662948335fcad6c412bb42d99ea754e3"
   integrity sha512-Y86MAxASe25hNzlDbsviXl8jQHb0RDvKt4c40ZJQ1Don0AAL0STLZSs4N+6gLEO55pedy7r2cLwS+ZDxPm/2Bw==
@@ -2134,6 +2134,13 @@ bundle-require@^2.1.8:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/bundle-require/-/bundle-require-2.3.0.tgz#2d4d4968dd29d2de4b9ac1db98be495c73f5b2b8"
   integrity sha512-kH8vyERJv0Td4Odu2KQyooYyeXDx2FbhGwSfkEGdyHmkTCahvwVI8w/pE2stbsp6G/W5/3kIC7ErdBg/30OAkw==
+
+bundle-require@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/bundle-require/-/bundle-require-3.0.2.tgz#900fbd84d84db6799e674fbebc74c4ba498651b5"
+  integrity sha512-WLS50LRdi8oAMnQfoxqjI3Fszi0xaI6dJumvtX909u0WREkYCuFGeE2UwMn5H8bSUXWtUB0XeBqNkgpVjMcYyQ==
+  dependencies:
+    load-tsconfig "^0.2.0"
 
 bytes-iec@^3.1.1:
   version "3.1.1"
@@ -2845,7 +2852,7 @@ esbuild-windows-arm64@0.14.14:
   resolved "https://registry.yarnpkg.com/esbuild-windows-arm64/-/esbuild-windows-arm64-0.14.14.tgz#ca747ce4066d5b8a79dbe48fe6ecd92d202e5366"
   integrity sha512-dCm1wTOm6HIisLanmybvRKvaXZZo4yEVrHh1dY0v582GThXJOzuXGja1HIQgV09RpSHYRL3m4KoUBL00l6SWEg==
 
-esbuild@^0.14.2, esbuild@^0.14.8:
+esbuild@^0.14.14, esbuild@^0.14.2, esbuild@^0.14.8:
   version "0.14.14"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.14.14.tgz#3b99f20d628013c3e2ae90e67687e03f1d6eb071"
   integrity sha512-aiK4ddv+uui0k52OqSHu4xxu+SzOim7Rlz4i25pMEiC8rlnGU0HJ9r+ZMfdWL5bzifg+nhnn7x4NSWTeehYblg==
@@ -3561,7 +3568,7 @@ glob@7.1.6:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^7.0.0, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6:
+glob@^7.0.0, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6, glob@^7.2.0:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.2.0.tgz#d15535af7732e02e948f4c41628bd910293f6023"
   integrity sha512-lmLf6gtyrPq8tTjSmrO94wBeQbFR3HbLHbuyD69wuyQkImp2hWqMGB47OX65FBkPffO641IP9jWa1z4ivqG26Q==
@@ -4789,6 +4796,11 @@ lines-and-columns@^1.1.6:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.2.4.tgz#eca284f75d2965079309dc0ad9255abb2ebc1632"
   integrity sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==
+
+load-tsconfig@^0.2.0:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/load-tsconfig/-/load-tsconfig-0.2.2.tgz#1aaf97e37e34a847042598a7596f4a3163320e06"
+  integrity sha512-9B4XOMjNhphRmXg3YHFnpgEH5fmYKofXJ7M6sLkRcfJ5DcuPiStlQ1Or+1Rv/aML716kQ9Q+C9zJGUcfMYiq4Q==
 
 locate-path@^2.0.0:
   version "2.0.0"
