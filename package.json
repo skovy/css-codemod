@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "tsdx watch",
-    "build": "yarn clean && tsup src/index.ts src/cli.ts",
+    "build": "tsup src/index.ts src/cli.ts --dts",
     "test": "tsdx test",
     "lint": "tsdx lint",
     "prepare": "yarn build",
@@ -36,14 +36,13 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "module": "dist/css-codemod.esm.js",
   "size-limit": [
     {
-      "path": "dist/css-codemod.cjs.production.min.js",
+      "path": "dist/index.js",
       "limit": "100 KB"
     },
     {
-      "path": "dist/css-codemod.esm.js",
+      "path": "dist/cli.js",
       "limit": "100 KB"
     }
   ],
