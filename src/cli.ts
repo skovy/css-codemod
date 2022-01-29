@@ -14,15 +14,18 @@ const run = async () => {
   const cli = cac(`${NAME}`);
 
   cli
-    .command('[files]', 'File path to transform. Glob patterns are supported.')
+    .command(
+      '[files]',
+      'File path to transform. Note glob patterns are supported but must be wrapped in quotes.'
+    )
     .example(`${NAME} ./a.css`)
     .example(`${NAME} ./src/a.css`)
-    .example(`${NAME} ./src/**/*.css`)
-    .example(`${NAME} ./**/*.css`)
+    .example(`${NAME} "./src/**/*.css"`)
+    .example(`${NAME} "./**/*.css"`)
     .option('-t, --transform <transform>', 'Path to the transform file', {
       default: './transform.ts',
     })
-    .action(async (files: string[], flags) => {
+    .action(async (files: string, flags) => {
       const { transform } = flags;
 
       await processTransform({ files, transform });
@@ -30,8 +33,8 @@ const run = async () => {
 
   cli.help();
   cli.version(VERSION);
-  cli.parse(process.argv, { run: false });
 
+  cli.parse(process.argv, { run: false });
   await cli.runMatchedCommand();
 };
 
