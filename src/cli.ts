@@ -3,7 +3,7 @@
 import { cac } from 'cac';
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import { processTransform } from './process-transform';
+import { perform } from './perform';
 
 const PACKAGE_PATH = join(__dirname, '../package.json');
 const PACKAGE_JSON = JSON.parse(readFileSync(PACKAGE_PATH, 'utf8'));
@@ -28,7 +28,7 @@ const run = async () => {
     .action(async (files: string, flags) => {
       const { transform } = flags;
 
-      await processTransform({ files, transform });
+      await perform({ files, transform });
     });
 
   cli.help();
