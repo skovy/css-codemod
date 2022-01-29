@@ -1,1 +1,1 @@
-export { traverse } from './traverse';
+export { traverse, Processors } from './traverse';
