@@ -40,4 +40,5 @@ export const writeFile = (file: string, contents: string): void => {
 /**
  * Return an array of file paths that matches the given files string.
  */
-export const getAllFilesToTransform = (files: string) => glob.sync(files);
+export const getAllFilesToTransform = (files: string) =>
+  glob.sync(files, { nodir: true });
