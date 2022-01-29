@@ -1,5 +1,5 @@
 {
-  "version": "0.0.0-alpha.0",
+  "version": "0.0.0-dripip",
   "license": "MIT",
   "name": "css-codemod",
   "author": "Spencer Miskoviak",
@@ -45,6 +45,7 @@
   ],
   "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.5",
+    "dripip": "^0.10.0",
     "husky": "^7.0.4",
     "size-limit": "^7.0.5",
     "tsdx": "^0.14.1",
