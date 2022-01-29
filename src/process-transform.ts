@@ -25,8 +25,6 @@ export const processTransform = async (options: ProcessTransformOptions) => {
     const fileInfo: TransformFileInfo = { path: file, source };
     const result = transform(fileInfo, api);
 
-    console.log(result);
-
     if (result !== null) {
       fs.writeFileSync(file, result);
     }
