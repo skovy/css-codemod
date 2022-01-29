@@ -4,15 +4,16 @@ import { validateTransform, loadTransform, Transform } from '../src/transform';
 jest.mock('bundle-require', () => ({ bundleRequire: jest.fn() }));
 
 describe('transform', () => {
-  let exit: jest.SpyInstance;
+  let consoleError: jest.SpyInstance;
+  let processExit: jest.SpyInstance;
 
   beforeEach(() => {
-    console.error = jest.fn();
-    exit = jest.spyOn(process, 'exit').mockImplementation();
+    consoleError = jest.spyOn(console, 'error').mockImplementation();
+    processExit = jest.spyOn(process, 'exit').mockImplementation();
   });
 
   afterEach(() => {
-    exit.mockRestore();
+    jest.restoreAllMocks();
   });
 
   describe('#validateTransform', () => {
@@ -26,25 +27,25 @@ describe('transform', () => {
       const twoArg: Transform = (_fileInfo, _api) => null;
       expect(validateTransform(twoArg)).toBe(twoArg);
 
-      expect(console.error).not.toHaveBeenCalled();
-      expect(exit).not.toHaveBeenCalled();
+      expect(consoleError).not.toHaveBeenCalled();
+      expect(processExit).not.toHaveBeenCalled();
     });
 
     it('should exit if an invalid transform is provided since there is no way to recover', () => {
-      expect(console.error).toHaveBeenCalledTimes(0);
-      expect(exit).toHaveBeenCalledTimes(0);
+      expect(consoleError).toHaveBeenCalledTimes(0);
+      expect(processExit).toHaveBeenCalledTimes(0);
 
       validateTransform(null);
-      expect(console.error).toHaveBeenCalledTimes(1);
-      expect(exit).toHaveBeenCalledTimes(1);
+      expect(consoleError).toHaveBeenCalledTimes(1);
+      expect(processExit).toHaveBeenCalledTimes(1);
 
       validateTransform(undefined);
-      expect(console.error).toHaveBeenCalledTimes(2);
-      expect(exit).toHaveBeenCalledTimes(2);
+      expect(consoleError).toHaveBeenCalledTimes(2);
+      expect(processExit).toHaveBeenCalledTimes(2);
 
       validateTransform((_fileInfo: any, _api: any, _invalid: any) => null);
-      expect(console.error).toHaveBeenCalledTimes(3);
-      expect(exit).toHaveBeenCalledTimes(3);
+      expect(consoleError).toHaveBeenCalledTimes(3);
+      expect(processExit).toHaveBeenCalledTimes(3);
     });
   });
 
@@ -58,8 +59,8 @@ describe('transform', () => {
       });
 
       expect(await loadTransform('./transform.ts')).toBe(transform);
-      expect(console.error).not.toHaveBeenCalled();
-      expect(exit).not.toHaveBeenCalled();
+      expect(consoleError).not.toHaveBeenCalled();
+      expect(processExit).not.toHaveBeenCalled();
     });
 
     it('should load the transform file and fallback to the default export', async () => {
@@ -70,8 +71,8 @@ describe('transform', () => {
       });
 
       expect(await loadTransform('./transform.ts')).toBe(transform);
-      expect(console.error).not.toHaveBeenCalled();
-      expect(exit).not.toHaveBeenCalled();
+      expect(consoleError).not.toHaveBeenCalled();
+      expect(processExit).not.toHaveBeenCalled();
     });
 
     it('should exit if an error occurs loading the transform file', async () => {
@@ -80,8 +81,8 @@ describe('transform', () => {
       );
 
       await loadTransform('./transform.ts');
-      expect(console.error).toHaveBeenCalledTimes(1);
-      expect(exit).toHaveBeenCalledTimes(1);
+      expect(consoleError).toHaveBeenCalledTimes(1);
+      expect(processExit).toHaveBeenCalledTimes(1);
     });
   });
 });
