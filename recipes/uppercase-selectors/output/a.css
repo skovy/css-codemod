@@ -1,0 +1,20 @@
+.A {
+  color: green;
+}
+
+.B {
+  margin-top: 123px;
+}
+
+.C {
+  background-color: orange;
+  color: #fff;
+}
+
+.CAMELCASE {
+  border: 1px solid red;
+}
+
+.KEBAB-CASE {
+  border: 1px solid blue;
+}
