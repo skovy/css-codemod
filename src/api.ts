@@ -13,7 +13,7 @@ const createAPIParse = ({
 }): TransformAPI['parse'] => {
   const parse: TransformAPI['parse'] = source => {
     const result = postcss().process(source, {
-      // Silence a warning about sourcemaps. Not relevant to this use case.
+      // Silence warning about sourcemaps. Not relevant to this use case.
       from: undefined,
       parser,
     });
@@ -22,7 +22,7 @@ const createAPIParse = ({
     // if one occurs. The error field can then be checked.
     const { root } = result;
 
-    // Re-surface an PostCSS parsing errors.
+    // Re-surface any PostCSS parsing errors.
     // https://github.com/postcss/postcss/issues/1708
     if ((result as any).error) {
       throw (result as any).error;

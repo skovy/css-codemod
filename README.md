@@ -72,6 +72,10 @@ export const transform: Transform = (fileInfo, api) => {
   // Implement the transform.
   // See below for more details on the API.
 };
+
+// Optionally defined a named `parser` export to configure the PostCSS parser.
+//   Docs: https://postcss.org/api/#parser
+// export const parser = ...;
 ```
 
 ## API
@@ -107,6 +111,7 @@ It's an object with helpers provided by `css-codemod` to perform transformations
 // transform.ts
 
 import { Transform } from 'css-codemod';
+import { parse, stringify } from 'postcss-scss';
 
 export const transform: Transform = (fileInfo, api) => {
   // Convert the file source into an AST using the provided helper.
@@ -129,8 +134,16 @@ export const transform: Transform = (fileInfo, api) => {
 
   // Convert the mutated AST back into a string.
   // Since a string is returned this will be written back to the file.
-  return root.toString();
+  // Note: in this example the `postcss-scss` package is used to add
+  // SCSS syntax support. The stringifier is passed when we call `toString` to
+  // re-output valid SCSS syntax.
+  return root.toString(stringify);
 };
+
+// Note: in this example the `postcss-scss` package is used to add SCSS syntax support.
+// This configures PostCSS to correctly parse SCSS syntax.
+//   Docs: https://postcss.org/api/#parser
+export const parser = parse;
 ```
 
 ### PostCSS
