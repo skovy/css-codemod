@@ -1,5 +1,5 @@
 import { bundleRequire } from 'bundle-require';
-import { Parser } from 'postcss';
+import { AcceptedPlugin, Parser } from 'postcss';
 import { TransformAPI } from './api';
 import { TransformFileInfo } from './files';
 
@@ -38,6 +38,7 @@ export const validateTransform = (transform: unknown): Transform => {
 interface LoadTransformResult {
   transform: Transform;
   parser?: Parser;
+  plugins?: AcceptedPlugin[];
 }
 
 /**
@@ -48,9 +49,11 @@ export const loadTransform = async (
 ): Promise<LoadTransformResult> => {
   try {
     const { mod } = await bundleRequire({ filepath });
+
     const transform = validateTransform(mod.transform || mod.default);
     const parser = mod.parser;
-    return { transform, parser };
+    const plugins = mod.plugins;
+    return { transform, parser, plugins };
   } catch (err) {
     console.error(
       `An error occurred loading the transform file. Verify "${filepath}" exists.`

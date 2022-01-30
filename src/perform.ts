@@ -18,9 +18,9 @@ interface ProcessTransformOptions {
  * Perform a transformation across a set of files.
  */
 export const perform = async (options: ProcessTransformOptions) => {
-  const { transform, parser } = await loadTransform(options.transform);
+  const { transform, parser, plugins } = await loadTransform(options.transform);
   const files = getAllFilesToTransform(options.files);
-  const api = createAPI({ parser });
+  const api = createAPI({ parser, plugins });
 
   files.map(file => {
     const fileInfo = getFileInfo(file);
