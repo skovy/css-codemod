@@ -1,4 +1,5 @@
-import postcss, { Root, Parser } from 'postcss';
+import postcss, { Root, Parser, AcceptedPlugin } from 'postcss';
+
 export interface TransformAPI {
   /**
    * Parse a raw CSS string into an abstract syntax tree and return a PostCSS `Root` node.
@@ -8,11 +9,13 @@ export interface TransformAPI {
 
 const createAPIParse = ({
   parser,
+  plugins = [],
 }: {
   parser?: Parser;
+  plugins?: AcceptedPlugin[];
 }): TransformAPI['parse'] => {
   const parse: TransformAPI['parse'] = source => {
-    const result = postcss().process(source, {
+    const result = postcss(plugins).process(source, {
       // Silence warning about sourcemaps. Not relevant to this use case.
       from: undefined,
       parser,
@@ -40,9 +43,10 @@ const createAPIParse = ({
 
 export const createAPI = ({
   parser,
-}: { parser?: Parser } = {}): TransformAPI => {
+  plugins,
+}: { parser?: Parser; plugins?: AcceptedPlugin[] } = {}): TransformAPI => {
   const api: TransformAPI = {
-    parse: createAPIParse({ parser }),
+    parse: createAPIParse({ parser, plugins }),
   };
 
   return api;

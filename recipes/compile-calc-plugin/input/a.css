@@ -1,0 +1,7 @@
+/* prettier-ignore */
+h1 {
+  font-size: calc(16px * 2);
+  height: calc(100px - 2em);
+  width: calc(2 * var(--base-width));
+  margin-bottom: calc(16px * 1.5);
+}

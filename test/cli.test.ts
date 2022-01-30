@@ -67,7 +67,7 @@ describe('cli', () => {
   });
 
   afterAll(() => {
-    fs.removeSync(cache);
+    // fs.removeSync(cache);
   });
 
   it.each(recipes)('should perform %s transform correctly', recipe => {
