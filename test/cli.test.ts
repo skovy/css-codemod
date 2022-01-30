@@ -29,7 +29,7 @@ const run = (recipe: string) => {
   );
   const inputGlob = path.join(inputDest, '**', '*.css');
   const command = `${bin} -t ${transform} '${inputGlob}'`;
-  
+
   console.log({ transform, inputGlob, command });
   try {
     execSync(command);
