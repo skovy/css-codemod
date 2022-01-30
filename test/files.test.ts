@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { EOL } from 'os';
 import { getAllFilesToTransform, getFileInfo, writeFile } from '../src/files';
 
 describe('files', () => {
@@ -22,13 +23,7 @@ describe('files', () => {
       const testFile = path.join(__dirname, 'css', 'a.css');
       expect(getFileInfo(testFile)).toEqual({
         path: testFile,
-        source: `.class {
-  margin: 42px;
-  color: blue;
-  padding-right: 10em;
-  background-color: rgba(0, 0, 0, 0.2);
-}
-`,
+        source: `.class {${EOL}  margin: 42px;${EOL}  color: blue;${EOL}  padding-right: 10em;${EOL}  background-color: rgba(0, 0, 0, 0.2);${EOL}}${EOL}`,
       });
       expect(consoleError).not.toHaveBeenCalled();
       expect(processExit).not.toHaveBeenCalled();
