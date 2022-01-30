@@ -9,5 +9,11 @@ export const transform: Transform = (fileInfo, api) => {
     }
   });
 
+  // Or, using more specific PostCSS helpers.
+  //   Docs: https://postcss.org/api/#rule-walkrules
+  root.walkRules(rule => {
+    rule.selector = rule.selector.toUpperCase();
+  });
+
   return root.toString();
 };

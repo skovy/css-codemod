@@ -5,7 +5,6 @@ css-codemod is a toolkit for running codemods over many CSS files to transform c
 - Any [PostCSS syntax parser and stringifier](https://github.com/postcss/postcss/blob/main/docs/syntax.md) can be added. This extends support for additional syntaxes like SASS and LESS.
 - Any [PostCSS plugin](https://github.com/postcss/postcss/blob/main/docs/plugins.md) can be added. This allows running any plugin as a one-off transform. This can be useful if you want to run a plugin once and remove it from a build tool or convert between syntaxes.
 - Any [PostCSS helpers](https://postcss.org/api/) for working with nodes and the abstract syntax tree can be used to transform CSS arbitrarily to fit your needs.
-- Custom helpers provided by css-codemod to streamline some types of transforms.
 
 ## Install
 
@@ -176,6 +175,8 @@ export const parser = parse;
 //   Plugin docs: https://github.com/postcss/postcss/blob/main/docs/plugins.md
 export const plugins = [calc({})];
 ```
+
+For more examples, see the [codemod recipes](https://github.com/skovy/css-codemod/tree/main/recipes).
 
 ### PostCSS
 
