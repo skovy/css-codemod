@@ -16,6 +16,7 @@ const run = (recipe: string) => {
     'input'
   );
   const inputDest = path.resolve(cache, recipe);
+  console.log({ originalInput, inputDest });
   fs.copySync(originalInput, inputDest);
 
   // Run the command
@@ -28,6 +29,8 @@ const run = (recipe: string) => {
   );
   const inputGlob = path.join(inputDest, '**', '*.css');
   const command = `${bin} -t ${transform} '${inputGlob}'`;
+  
+  console.log({ transform, inputGlob, command });
   try {
     execSync(command);
   } catch (err) {
@@ -56,7 +59,7 @@ const run = (recipe: string) => {
 };
 
 const recipes = fs.readdirSync(path.resolve(__dirname, '..', 'recipes'));
-
+console.log({ recipes });
 describe('cli', () => {
   beforeAll(() => {
     fs.removeSync(cache);
