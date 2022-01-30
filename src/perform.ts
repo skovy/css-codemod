@@ -1,4 +1,4 @@
-import { api } from './api';
+import { createAPI } from './api';
 import { getAllFilesToTransform, getFileInfo, writeFile } from './files';
 import { loadTransform } from './transform';
 
@@ -18,8 +18,9 @@ interface ProcessTransformOptions {
  * Perform a transformation across a set of files.
  */
 export const perform = async (options: ProcessTransformOptions) => {
-  const transform = await loadTransform(options.transform);
+  const { transform, parser } = await loadTransform(options.transform);
   const files = getAllFilesToTransform(options.files);
+  const api = createAPI({ parser });
 
   files.map(file => {
     const fileInfo = getFileInfo(file);
@@ -33,7 +34,7 @@ export const perform = async (options: ProcessTransformOptions) => {
     } catch (err) {
       if (err instanceof Error) {
         console.error(
-          `The following error occurred transforming "${file}":\n  ${err.message}`
+          `The following error occurred transforming "${file}":\n  ${err.message}${err.stack}`
         );
       } else {
         console.error(

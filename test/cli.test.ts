@@ -6,7 +6,11 @@ import fs from 'fs-extra';
 const bin = path.resolve(__dirname, '..', 'dist', 'cli.js');
 const cache = path.resolve(__dirname, '.cache');
 
-const run = (recipe: string) => {
+interface RunOptions {
+  ext?: string;
+}
+
+const run = (recipe: string, { ext = 'css' }: RunOptions = {}) => {
   // Setup the test files
   const originalInput = path.resolve(
     __dirname,
@@ -19,6 +23,7 @@ const run = (recipe: string) => {
   fs.copySync(originalInput, inputDest);
 
   // Run the command
+  const fileGlob = `*.${ext}`;
   const transform = path.resolve(
     __dirname,
     '..',
@@ -26,15 +31,9 @@ const run = (recipe: string) => {
     recipe,
     'transform.ts'
   );
-  const inputGlob = path.join(inputDest, '**', '*.css');
-  const command = `${bin} -t ${transform} '${inputGlob}'`;
-
-  try {
-    execa.sync(bin, ['-t', transform, inputGlob]);
-  } catch (err) {
-    console.error(`Error executing command: ${command}`);
-    console.error(err);
-  }
+  const inputGlob = path.join(inputDest, '**', fileGlob);
+  const { stderr } = execa.sync(bin, ['-t', transform, inputGlob]);
+  expect(stderr).toEqual('');
 
   // Compare results
   const expectedOutput = path.resolve(
@@ -44,7 +43,7 @@ const run = (recipe: string) => {
     recipe,
     'output'
   );
-  const expectedOutputGlob = path.join(expectedOutput, '**', '*.css');
+  const expectedOutputGlob = path.join(expectedOutput, '**', fileGlob);
   const expectedFiles = glob.sync(expectedOutputGlob);
 
   expectedFiles.forEach(expectedFile => {
@@ -58,6 +57,10 @@ const run = (recipe: string) => {
 
 const recipes = fs.readdirSync(path.resolve(__dirname, '..', 'recipes'));
 
+const OPTIONS: Record<string, RunOptions> = {
+  'rename-scss-variable': { ext: 'scss' },
+};
+
 describe('cli', () => {
   beforeAll(() => {
     fs.removeSync(cache);
@@ -68,6 +71,6 @@ describe('cli', () => {
   });
 
   it.each(recipes)('should perform %s transform correctly', recipe => {
-    run(recipe);
+    run(recipe, OPTIONS[recipe]);
   });
 });
