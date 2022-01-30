@@ -5,7 +5,7 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import { perform } from './perform';
 
-const PACKAGE_PATH = join(__dirname, '../package.json');
+const PACKAGE_PATH = join(__dirname, '..', 'package.json');
 const PACKAGE_JSON = JSON.parse(readFileSync(PACKAGE_PATH, 'utf8'));
 const NAME = PACKAGE_JSON.name;
 const VERSION = PACKAGE_JSON.version;
