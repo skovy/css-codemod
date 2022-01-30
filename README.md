@@ -2,6 +2,11 @@
 
 css-codemod is a toolkit for running codemods (a.k.a. transforms) over many CSS files.
 
+Powered by [PostCSS](https://postcss.org) so the existing tooling and community can be leveraged.
+
+- Any [PostCSS syntax parser and stringifier](https://github.com/postcss/postcss/blob/main/docs/syntax.md) can be added.
+- Any [PostCSS plugin](https://github.com/postcss/postcss/blob/main/docs/plugins.md) can be added,
+
 ## Install
 
 There are a few ways to use css-codemod.
