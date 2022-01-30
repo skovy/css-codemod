@@ -3,6 +3,11 @@
   "license": "MIT",
   "name": "css-codemod",
   "author": "Spencer Miskoviak",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skovy/css-codemod.git"
+  },
+  "homepage": "https://github.com/skovy/css-codemod#readme",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
