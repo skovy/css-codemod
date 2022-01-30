@@ -1,12 +1,11 @@
 # :snake: css-codemod
 
-css-codemod is a toolkit for running codemods over many CSS files to transform code.
-
-Powered by [PostCSS](https://postcss.org):
+css-codemod is a toolkit for running codemods over many CSS files to transform code, powered by [PostCSS](https://postcss.org):
 
 - Any [PostCSS syntax parser and stringifier](https://github.com/postcss/postcss/blob/main/docs/syntax.md) can be added. This extends support for additional syntaxes like SASS and LESS.
-- Any [PostCSS plugin](https://github.com/postcss/postcss/blob/main/docs/plugins.md) can be added. This allows running any plugin as a one-off transform. This can be useful if you want to run a plugin once and remove it from a build tool.
-- Any [PostCSS helpers](https://postcss.org/api/) for working with nodes and the abstract syntax tree can be used to transform CSS.
+- Any [PostCSS plugin](https://github.com/postcss/postcss/blob/main/docs/plugins.md) can be added. This allows running any plugin as a one-off transform. This can be useful if you want to run a plugin once and remove it from a build tool or convert between syntaxes.
+- Any [PostCSS helpers](https://postcss.org/api/) for working with nodes and the abstract syntax tree can be used to transform CSS arbitrarily to fit your needs.
+- Custom helpers provided by css-codemod to streamline some types of transforms.
 
 ## Install
 
@@ -172,8 +171,7 @@ export const transform: Transform = (fileInfo, api) => {
 export const parser = parse;
 
 // Note: in this example the `postcss-calc` package is used to compute `calc` expressions.
-// This is used only as an example. Say you wanted to simplify all the complex `calc`
-// expressions? Or, maybe you want to remove a plugin from the build pipeline and run it once?
+// This is used only as an example.
 //   API docs: https://postcss.org/api/#acceptedplugin
 //   Plugin docs: https://github.com/postcss/postcss/blob/main/docs/plugins.md
 export const plugins = [calc({})];
