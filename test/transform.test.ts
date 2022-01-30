@@ -58,7 +58,8 @@ describe('transform', () => {
         mod: { transform, default: def },
       });
 
-      expect(await loadTransform('./transform.ts')).toBe(transform);
+      const result = await loadTransform('./transform.ts');
+      expect(result.transform).toBe(transform);
       expect(consoleError).not.toHaveBeenCalled();
       expect(processExit).not.toHaveBeenCalled();
     });
@@ -70,7 +71,8 @@ describe('transform', () => {
         mod: { default: transform },
       });
 
-      expect(await loadTransform('./transform.ts')).toBe(transform);
+      const result = await loadTransform('./transform.ts');
+      expect(result.transform).toBe(transform);
       expect(consoleError).not.toHaveBeenCalled();
       expect(processExit).not.toHaveBeenCalled();
     });

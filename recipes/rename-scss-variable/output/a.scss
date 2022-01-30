@@ -1,0 +1,20 @@
+@mixin reset-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.a {
+  // Inline comment
+  color: green;
+  margin: 20px;
+
+  &.b {
+    border: 1px solid orange;
+    color: $new-color-var;
+  }
+}
+
+ul {
+  @include horizontal-list;
+}

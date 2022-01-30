@@ -1,7 +1,9 @@
 import { Declaration, Rule } from 'postcss';
-import { api } from '../src/api';
+import { createAPI } from '../src/api';
 
 describe('api', () => {
+  const api = createAPI();
+
   describe('#parse', () => {
     it('should return the root node of an abstract syntax tree', () => {
       const root = api.parse(`.class { color: orange; }`);
