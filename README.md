@@ -1,30 +1,31 @@
 # :snake: css-codemod
 
-css-codemod is a toolkit for running codemods (a.k.a. transforms) over many CSS files.
+css-codemod is a toolkit for running codemods over many CSS files to transform code.
 
-Powered by [PostCSS](https://postcss.org) so the existing tooling and community can be leveraged.
+Powered by [PostCSS](https://postcss.org):
 
-- Any [PostCSS syntax parser and stringifier](https://github.com/postcss/postcss/blob/main/docs/syntax.md) can be added.
-- Any [PostCSS plugin](https://github.com/postcss/postcss/blob/main/docs/plugins.md) can be added,
+- Any [PostCSS syntax parser and stringifier](https://github.com/postcss/postcss/blob/main/docs/syntax.md) can be added. This extends support for additional syntaxes like SASS and LESS.
+- Any [PostCSS plugin](https://github.com/postcss/postcss/blob/main/docs/plugins.md) can be added. This allows running any plugin as a one-off transform. This can be useful if you want to run a plugin once and remove it from a build tool.
+- Any [PostCSS helpers](https://postcss.org/api/) for working with nodes and the abstract syntax tree can be used to transform CSS.
 
 ## Install
 
 There are a few ways to use css-codemod.
 
-First, using [npx](https://www.npmjs.com/package/npx) to execute the transform without need to explicitly install `css-codemod`.
+First, using [npx](https://www.npmjs.com/package/npx):
 
 ```bash
 npx css-codemod "./src/**/*.css" -t ./transform.ts
 ```
 
-Second, install `css-codemod` as a dependency and execute with your package manager of choice.
+Second, install and execute `css-codemod` with a package manager:
 
 ```bash
 yarn add -D css-codemod
 yarn css-codemod "./src/**/*.css" -t ./transform.ts
 ```
 
-Third, install `css-codemod` globally.
+Third, globally install `css-codemod`:
 
 ```
 yarn add -g css-codemod
@@ -74,13 +75,14 @@ import { Transform } from 'css-codemod';
 
 // Define a named `transform` export function.
 export const transform: Transform = (fileInfo, api) => {
-  // Implement the transform.
-  // See below for more details on the API.
+  // Implement the transform. See below for more details on the API.
 };
 
-// Optionally defined a named `parser` export to configure the PostCSS parser.
-//   Docs: https://postcss.org/api/#parser
+// Optionally define a named `parser` export to configure the PostCSS parser.
 // export const parser = ...;
+
+// Optionally define a named `plugins` export to configure PostCSS plugins.
+// export const plugins = [...];
 ```
 
 ## API
@@ -110,13 +112,30 @@ It's an object with helpers provided by `css-codemod` to perform transformations
 
 - `parse`: parse a raw CSS string into an AST. This returns the root node of the underlying abstract syntax tree. Transformations can be made by making direct mutations to the underlying node. This is performed with [PostCSS](https://postcss.org/) so the returned node is a PostCSS [Root](https://postcss.org/api/#root) node. Refer to the [PostCSS API documentation](https://postcss.org/api/) for documentation on nodes and various helpers.
 
+### `parser`
+
+Define the [PostCSS parser](https://postcss.org/api/#parser) to use when parsing the CSS files. This is useful for adding support for additional syntaxes.
+
+To configure, export `parser` with a PostCSS parser from the transform file.
+
+Note: if you define a `parser` than you almost always want to pass the `stringifier` from the same package to `root.toString(stringifier)`. This will guarantee the output is properly formatted using the same syntax.
+
+### `plugins`
+
+Define [PostCSS plugins]() to use when parsing the CSS files. This is useful for running plugins one-off, for example to upgrade syntax or perform other transformations already provided as plugins. Creating a custom plugin is one way that transform logic can be shared with other PostCSS tools and `css-codemod`. If you only want to share the codemod, then creating a transform file and sharing it is another option that requires less setup from others.
+
+To configure, export `plugins` with an array of PostCSS plugins from the transform file.
+
 ### Example
 
 ```ts
 // transform.ts
 
 import { Transform } from 'css-codemod';
+// Example PostCSS syntax extension. This isn't required.
 import { parse, stringify } from 'postcss-scss';
+// Example PostCSS plugin. This isn't required.
+import calc from 'postcss-calc';
 
 export const transform: Transform = (fileInfo, api) => {
   // Convert the file source into an AST using the provided helper.
@@ -139,6 +158,7 @@ export const transform: Transform = (fileInfo, api) => {
 
   // Convert the mutated AST back into a string.
   // Since a string is returned this will be written back to the file.
+  //
   // Note: in this example the `postcss-scss` package is used to add
   // SCSS syntax support. The stringifier is passed when we call `toString` to
   // re-output valid SCSS syntax.
@@ -147,8 +167,16 @@ export const transform: Transform = (fileInfo, api) => {
 
 // Note: in this example the `postcss-scss` package is used to add SCSS syntax support.
 // This configures PostCSS to correctly parse SCSS syntax.
-//   Docs: https://postcss.org/api/#parser
+//   API docs: https://postcss.org/api/#parser
+//   Syntax docs: https://github.com/postcss/postcss/blob/main/docs/syntax.md
 export const parser = parse;
+
+// Note: in this example the `postcss-calc` package is used to compute `calc` expressions.
+// This is used only as an example. Say you wanted to simplify all the complex `calc`
+// expressions? Or, maybe you want to remove a plugin from the build pipeline and run it once?
+//   API docs: https://postcss.org/api/#acceptedplugin
+//   Plugin docs: https://github.com/postcss/postcss/blob/main/docs/plugins.md
+export const plugins = [calc({})];
 ```
 
 ### PostCSS
@@ -161,6 +189,6 @@ export const parser = parse;
 
 ## Motivation
 
-**css-codemod** is inspired by tools like [`jscodeshift`](https://github.com/facebook/jscodeshift) to streamline CSS transformations whether it be an evolving codebase, or adopting newer syntax.
+css-codemod is inspired by tools like [`jscodeshift`](https://github.com/facebook/jscodeshift) to streamline CSS transformations whether it be an evolving codebase, or adopting newer syntax.
 
-Read [CSS codemods with PostCSS](https://www.skovy.dev/blog/css-codemods-with-postcss) for a conceptual overview of how this toolkit works.
+Read [CSS codemods with PostCSS](https://www.skovy.dev/blog/css-codemods-with-postcss) for a conceptual overview of how this toolkit works and the initial motivation.
