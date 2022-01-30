@@ -3,17 +3,23 @@ import glob from 'glob';
 import path from 'path';
 import fs from 'fs-extra';
 
-const bin = path.join(__dirname, '..', 'dist', 'cli.js');
-const cache = path.join(__dirname, '.cache');
+const bin = path.resolve(__dirname, '..', 'dist', 'cli.js');
+const cache = path.resolve(__dirname, '.cache');
 
 const run = (recipe: string) => {
   // Setup the test files
-  const originalInput = path.join(__dirname, '..', 'recipes', recipe, 'input');
+  const originalInput = path.resolve(
+    __dirname,
+    '..',
+    'recipes',
+    recipe,
+    'input'
+  );
   const inputDest = path.resolve(cache, recipe);
   fs.copySync(originalInput, inputDest);
 
   // Run the command
-  const transform = path.join(
+  const transform = path.resolve(
     __dirname,
     '..',
     'recipes',
@@ -22,10 +28,15 @@ const run = (recipe: string) => {
   );
   const inputGlob = path.join(inputDest, '**', '*.css');
   const command = `${bin} -t ${transform} '${inputGlob}'`;
-  execSync(command);
+  try {
+    execSync(command);
+  } catch (err) {
+    console.error(`Error executing command: ${command}`);
+    console.error(err);
+  }
 
   // Compare results
-  const expectedOutput = path.join(
+  const expectedOutput = path.resolve(
     __dirname,
     '..',
     'recipes',
