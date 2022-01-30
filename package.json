@@ -8,6 +8,11 @@
     "url": "https://github.com/skovy/css-codemod.git"
   },
   "homepage": "https://github.com/skovy/css-codemod#readme",
+  "keywords": [
+    "css",
+    "codemod",
+    "postcss"
+  ],
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
