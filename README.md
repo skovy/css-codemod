@@ -1,5 +1,7 @@
 # :snake: css-codemod
 
+[![npm version](https://img.shields.io/npm/v/css-codemod.svg?style=flat)](https://www.npmjs.com/package/css-codemod)
+
 css-codemod is a toolkit for running codemods over many CSS files to transform code, powered by [PostCSS](https://postcss.org):
 
 - Any [PostCSS syntax parser and stringifier](https://github.com/postcss/postcss/blob/main/docs/syntax.md) can be added. This extends support for additional syntaxes like SASS and LESS.
