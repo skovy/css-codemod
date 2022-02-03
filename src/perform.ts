@@ -22,7 +22,7 @@ export const perform = async (options: ProcessTransformOptions) => {
   const files = getAllFilesToTransform(options.files);
   const api = createAPI({ parser, plugins });
 
-  files.map(file => {
+  files.forEach(file => {
     const fileInfo = getFileInfo(file);
 
     try {
