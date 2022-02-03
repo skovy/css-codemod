@@ -1,10 +1,16 @@
 import postcss, { Root, Parser, AcceptedPlugin } from 'postcss';
+import parseValue from 'postcss-value-parser';
 
 export interface TransformAPI {
   /**
    * Parse a raw CSS string into an abstract syntax tree and return a PostCSS `Root` node.
    */
   parse(source: string): Root;
+
+  /**
+   * Parse a CSS value string into a series of nodes to operate on.
+   */
+  parseValue(value: string): parseValue.ParsedValue;
 }
 
 const createAPIParse = ({
@@ -47,6 +53,7 @@ export const createAPI = ({
 }: { parser?: Parser; plugins?: AcceptedPlugin[] } = {}): TransformAPI => {
   const api: TransformAPI = {
     parse: createAPIParse({ parser, plugins }),
+    parseValue,
   };
 
   return api;

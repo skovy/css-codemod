@@ -32,7 +32,8 @@ const run = (recipe: string, { ext = 'css' }: RunOptions = {}) => {
     'transform.ts'
   );
   const inputGlob = path.join(inputDest, '**', fileGlob);
-  const { stderr } = execa.sync(bin, ['-t', transform, inputGlob]);
+  const { stdout, stderr } = execa.sync(bin, ['-t', transform, inputGlob]);
+  expect(stdout).toEqual('');
   expect(stderr).toEqual('');
 
   // Compare results
