@@ -109,6 +109,7 @@ The second argument passed to the `transform` function.
 It's an object with helpers provided by `css-codemod` to perform transformations.
 
 - `parse`: parse a raw CSS string into an AST. This returns the root node of the underlying abstract syntax tree. Transformations can be made by making direct mutations to the underlying node. This is performed with [PostCSS](https://postcss.org/) so the returned node is a PostCSS [Root](https://postcss.org/api/#root) node. Refer to the [PostCSS API documentation](https://postcss.org/api/) for documentation on nodes and various helpers.
+- `parseValue`: parse a CSS string [declaration value](https://postcss.org/api/#declaration-value) into a "mini" AST. This returns a result with all the nodes representing the string value. This is an alias for the [`postcss-value-parser`](https://github.com/TrySound/postcss-value-parser) package. PostCSS itself doesn't parse values and working with complex string values can be challenging. Converting these string values into nodes when necessary can be useful. There are additional parsers for things like selectors, dimensions, media queries, etc. provided in the [PostCSS documentation for plugins](https://github.com/postcss/postcss/blob/main/docs/writing-a-plugin.md#step-3-find-nodes).
 
 ### `parser`
 

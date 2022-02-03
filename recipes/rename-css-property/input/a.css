@@ -1,0 +1,9 @@
+.a {
+  --old-color: #fafafa;
+  --other-color: magenta;
+
+  color: var(--old-color);
+  background: orange;
+  box-shadow: 0 0 0 2px var(--other-color);
+  border: 2px solid var(--old-color);
+}
